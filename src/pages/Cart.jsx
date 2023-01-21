@@ -1,13 +1,12 @@
 import React from 'react';
-import { List } from 'react-content-loader';
 import { Link } from 'react-router-dom';
 
 export const Cart = () => {
   return (
     <div className="container container--cart">
       <div className="cart">
-        <div class="cart__top">
-          <h2 class="content__title">
+        <div className="cart__top">
+          <h2 className="content__title">
             <svg
               width="18"
               height="18"
@@ -35,7 +34,7 @@ export const Cart = () => {
             </svg>
             Корзина
           </h2>
-          <div class="cart__clear">
+          <div className="cart__clear">
             <svg
               width="20"
               height="20"
@@ -70,23 +69,23 @@ export const Cart = () => {
             <span>Очистить корзину</span>
           </div>
         </div>
-        <div class="content__items">
-          <div class="cart__item">
-            <div class="cart__item-img">
+        <div className="content__items">
+          <div className="cart__item">
+            <div className="cart__item-img">
               <img
-                class="pizza-block__image"
+                className="pizza-block__image"
                 src="https://dodopizza.azureedge.net/static/Img/Products/Pizza/ru-RU/ec29465e-606b-4a04-a03e-da3940d37e0e.jpg"
                 alt="Pizza"
               />
             </div>
-            <div class="cart__item-info">
+            <div className="cart__item-info">
               <h3>Четыре сезона</h3>
               <p>тонкое, 26 см.</p>
             </div>
-            <div class="cart__item-count">
+            <div className="cart__item-count">
               <button
                 disabled=""
-                class="button button--outline button--circle cart__item-count-minus">
+                className="button button--outline button--circle cart__item-count-minus">
                 <svg
                   width="10"
                   height="10"
@@ -102,7 +101,7 @@ export const Cart = () => {
                 </svg>
               </button>
               <b>1</b>
-              <button class="button button--outline button--circle cart__item-count-plus">
+              <button className="button button--outline button--circle cart__item-count-plus">
                 <svg
                   width="10"
                   height="10"
@@ -118,11 +117,11 @@ export const Cart = () => {
                 </svg>
               </button>
             </div>
-            <div class="cart__item-price">
+            <div className="cart__item-price">
               <b>395 ₽</b>
             </div>
-            <div class="cart__item-remove">
-              <div class="button button--outline button--circle">
+            <div className="cart__item-remove">
+              <div className="button button--outline button--circle">
                 <svg
                   width="10"
                   height="10"
@@ -139,22 +138,22 @@ export const Cart = () => {
               </div>
             </div>
           </div>
-          <div class="cart__item">
-            <div class="cart__item-img">
+          <div className="cart__item">
+            <div className="cart__item-img">
               <img
-                class="pizza-block__image"
+                className="pizza-block__image"
                 src="https://dodopizza.azureedge.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
                 alt="Pizza"
               />
             </div>
-            <div class="cart__item-info">
+            <div className="cart__item-info">
               <h3>Чизбургер-пицца</h3>
               <p>тонкое, 26 см.</p>
             </div>
-            <div class="cart__item-count">
+            <div className="cart__item-count">
               <button
                 disabled=""
-                class="button button--outline button--circle cart__item-count-minus">
+                className="button button--outline button--circle cart__item-count-minus">
                 <svg
                   width="10"
                   height="10"
@@ -170,7 +169,7 @@ export const Cart = () => {
                 </svg>
               </button>
               <b>1</b>
-              <button class="button button--outline button--circle cart__item-count-plus">
+              <button className="button button--outline button--circle cart__item-count-plus">
                 <svg
                   width="10"
                   height="10"
@@ -186,11 +185,11 @@ export const Cart = () => {
                 </svg>
               </button>
             </div>
-            <div class="cart__item-price">
+            <div className="cart__item-price">
               <b>415 ₽</b>
             </div>
-            <div class="cart__item-remove">
-              <div class="button button--outline button--circle">
+            <div className="cart__item-remove">
+              <div className="button button--outline button--circle">
                 <svg
                   width="10"
                   height="10"
@@ -207,22 +206,22 @@ export const Cart = () => {
               </div>
             </div>
           </div>
-          <div class="cart__item">
-            <div class="cart__item-img">
+          <div className="cart__item">
+            <div className="cart__item-img">
               <img
-                class="pizza-block__image"
+                className="pizza-block__image"
                 src="https://dodopizza.azureedge.net/static/Img/Products/Pizza/ru-RU/30367198-f3bd-44ed-9314-6f717960da07.jpg"
                 alt="Pizza"
               />
             </div>
-            <div class="cart__item-info">
+            <div className="cart__item-info">
               <h3>Овощи и грибы 🌱</h3>
               <p>тонкое, 26 см.</p>
             </div>
-            <div class="cart__item-count">
+            <div className="cart__item-count">
               <button
                 disabled=""
-                class="button button--outline button--circle cart__item-count-minus">
+                className="button button--outline button--circle cart__item-count-minus">
                 <svg
                   width="10"
                   height="10"
@@ -238,7 +237,7 @@ export const Cart = () => {
                 </svg>
               </button>
               <b>1</b>
-              <button class="button button--outline button--circle cart__item-count-plus">
+              <button className="button button--outline button--circle cart__item-count-plus">
                 <svg
                   width="10"
                   height="10"
@@ -254,11 +253,11 @@ export const Cart = () => {
                 </svg>
               </button>
             </div>
-            <div class="cart__item-price">
+            <div className="cart__item-price">
               <b>285 ₽</b>
             </div>
-            <div class="cart__item-remove">
-              <div class="button button--outline button--circle">
+            <div className="cart__item-remove">
+              <div className="button button--outline button--circle">
                 <svg
                   width="10"
                   height="10"
@@ -276,8 +275,8 @@ export const Cart = () => {
             </div>
           </div>
         </div>
-        <div class="cart__bottom">
-          <div class="cart__bottom-details">
+        <div className="cart__bottom">
+          <div className="cart__bottom-details">
             <span>
               {' '}
               Всего пицц:
@@ -289,8 +288,8 @@ export const Cart = () => {
               <b>1095 ₽</b>{' '}
             </span>
           </div>
-          <div class="cart__bottom-buttons">
-            <Link class="button button--outline button--add go-back-btn" to="/">
+          <div className="cart__bottom-buttons">
+            <Link className="button button--outline button--add go-back-btn" to="/">
               <svg
                 width="8"
                 height="14"
@@ -306,7 +305,7 @@ export const Cart = () => {
               </svg>
               <span>Вернуться назад</span>
             </Link>
-            <div class="button pay-btn">
+            <div className="button pay-btn">
               <span>Оплатить сейчас</span>
             </div>
           </div>

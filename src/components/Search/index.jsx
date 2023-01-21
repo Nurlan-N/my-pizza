@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { SearchContext } from '../../App';
 import Close from '../../assets/image/Close.svg'
-
 import styles from './Search.module.scss';
 
-const Search = ({searchValue,setSearchValue}) => {
-  console.log(searchValue);
+const Search = () => {
+  const {searchValue,setSearchValue} = useContext(SearchContext)
   return (
     <div className={styles.root}>
       <svg className={styles.search} viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
