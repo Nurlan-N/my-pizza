@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './NotFounBlock.module.scss';
-console.log(styles);
 
 export const NotFoundBlock = () => {
   return (

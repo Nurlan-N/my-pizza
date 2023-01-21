@@ -1,26 +1,62 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCategoryId } from '../redux/slices/filterSlice';
+import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
 import axios from 'axios';
+import qs from 'qs';
 
 import Pagination from '../components/Pogination';
 import Categories from '../components/Categories';
 import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
-import Sort from '../components/Sort';
+import Sort, { sortList } from '../components/Sort';
 import { SearchContext } from '../App';
+import { useNavigate } from 'react-router-dom';
 
 export const Home = () => {
-  const {categoryId , sort} = useSelector((state) => state.filterSlice);
-
+  const navigate = useNavigate();
+  const { categoryId, sort, currentPage } = useSelector((state) => state.filterSlice);
   const dispatch = useDispatch();
   const { searchValue } = useContext(SearchContext);
   const [pizzas, setPizzas] = useState([]);
   const [loading, setLoading] = useState(true);
-  const search = searchValue ? `&search=${searchValue}` : '';
-  const [currentPage, setCurrentPage] = useState(1);
+  const isSearch = useRef(false);
+  const isMounted = useRef(false);
 
+  const search = searchValue ? `&search=${searchValue}` : '';
+
+  // İlk Renderin Olmağını yoxlamaq varsa URL-i dəyişmək
   useEffect(() => {
+    if (isMounted.current) {
+      const queryString = qs.stringify({
+        sortProperty: sort.sortProperty,
+        categoryId,
+        currentPage,
+      });
+      navigate(`?${queryString}`);
+    }
+    isMounted.current = true;
+  }, [categoryId, sort.sortProperty, currentPage]);
+
+  // ilk Render Zamanı URL-parametrlərin redux-da yadda saxlamaq
+  useEffect(() => {
+    if (window.location.search) {
+      const params = qs.parse(window.location.search.substring(1));
+      const sort = sortList.find((obj) => obj.sortProperty === params.sortProperty);
+      dispatch(setFilters({ ...params, sort }));
+      isSearch.current = true;
+    }
+  }, []);
+  
+  // ilk Render olubsa Datanı gətirmək
+  useEffect(() => {
+    window.scroll(0, 0);
+    if (!isSearch.current) {
+      fetchPizzas();
+    }
+    isSearch.current = false;
+  }, [categoryId, sort, search, currentPage]);
+
+  const fetchPizzas = () => {
     setLoading(true);
     const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
     const sortBy = sort.sortProperty.replace('-', '');
@@ -34,11 +70,15 @@ export const Home = () => {
       setLoading(false);
     };
     GetPizzas();
-    window.scrollTo(0, 0);
-  }, [categoryId, sort, search, currentPage]);
+  };
+
+
 
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id));
+  };
+  const onChangePage = (e) => {
+    dispatch(setCurrentPage(e.selected + 1));
   };
 
   return (
@@ -53,7 +93,7 @@ export const Home = () => {
           ? [...Array(10)].map((_, i) => <Skeleton key={i} />)
           : pizzas.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
       </div>
-      <Pagination onChangePage={(num) => setCurrentPage(num)} />
+      <Pagination onChangePage={onChangePage} />
     </div>
   );
 };
