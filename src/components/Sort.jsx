@@ -1,5 +1,7 @@
 import React from 'react';
-import { useSelector,useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { onChangeSort } from '../redux/slices/filterSlice';
 
 export const sortList = [
@@ -9,22 +11,33 @@ export const sortList = [
   { name: 'цене(ASC)', sortProperty: '-price' },
   { name: 'алфавиту(DESC)', sortProperty: 'title' },
   { name: 'алфавиту(ASC)', sortProperty: '-title' },
-
 ];
 
 function Sort() {
   const dispatch = useDispatch();
-  const  sort = useSelector((state) => state.filterSlice.sort);
+  const sort = useSelector((state) => state.filterSlice.sort);
+  const sortRef = useRef();
+  const [visiblePopup, setIsVisiblePopup] = React.useState(false);
 
-  const [open, setOpen] = React.useState(false);
- 
   const onClickListItem = (obj) => {
     dispatch(onChangeSort(obj));
-    setOpen(false , "222");
+    setIsVisiblePopup(false);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (e.composedPath().includes(sortRef.current)) {
+        setIsVisiblePopup(true);
+      }
+    };
+    document.body.addEventListener('click', handleClickOutside);
+    return () => {
+      document.body.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
           width="10"
@@ -37,9 +50,9 @@ function Sort() {
             fill="#2C2C2C"></path>
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setOpen(!open)}>{sort.name}</span>
+        <span onClick={() => setIsVisiblePopup(!visiblePopup)}>{sort.name}</span>
       </div>
-      {open && (
+      {visiblePopup && (
         <div className="sort__popup">
           <ul>
             {sortList.map((obj, i) => (
