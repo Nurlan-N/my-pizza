@@ -7,9 +7,11 @@ function PizzaBlock({ id, name, imageUrl, price, sizes, types }) {
   const [activeSize, setActiveSize] = React.useState(0);
   const typeNames = ['тонкое', 'традиционное'];
   const dispatch = useDispatch();
-  const cartItem = useSelector(state => state.cartSlice.items.find((obj) => obj.id === id))
-
-  const addedCount = cartItem ? cartItem.count : '0'
+  const cartItem = useSelector((state) => state.cartSlice.items.find((obj) => obj.id === id));
+  if (activeSize > 0) {
+    price = price * activeSize+1;
+  }
+  const addedCount = cartItem ? cartItem.count : '0';
 
   const onClickAdd = () => {
     const item = {
@@ -17,12 +19,11 @@ function PizzaBlock({ id, name, imageUrl, price, sizes, types }) {
       name,
       price,
       imageUrl,
-      type: typeNames[activeType], 
-      size: activeSize,
+      type: typeNames[activeType],
+      size: sizes[activeSize],
     };
     dispatch(addItem(item));
   };
-
 
   return (
     <div className="pizza-block-wrapper">
@@ -54,7 +55,7 @@ function PizzaBlock({ id, name, imageUrl, price, sizes, types }) {
           </ul>
         </div>
         <div className="pizza-block__bottom">
-          <div className="pizza-block__price">от {price} ₽</div>
+          <div className="pizza-block__price">от {price} $</div>
           <button onClick={onClickAdd} className="button button--outline button--add">
             <svg
               width="12"
