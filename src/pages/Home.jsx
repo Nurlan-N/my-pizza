@@ -11,14 +11,15 @@ import Skeleton from '../components/PizzaBlock/Skeleton';
 import Sort, { sortList } from '../components/Sort';
 import { SearchContext } from '../App';
 import { useNavigate } from 'react-router-dom';
+import { fetchPizzas } from '../redux/slices/pizzaSlice';
 
 export const Home = () => {
   const navigate = useNavigate();
   const { categoryId, sort, currentPage } = useSelector((state) => state.filterSlice);
+  const {items,status} = useSelector((state) => state.pizza);
+
   const dispatch = useDispatch();
   const { searchValue } = useContext(SearchContext);
-  const [pizzas, setPizzas] = useState([]);
-  const [loading, setLoading] = useState(true);
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
@@ -46,33 +47,31 @@ export const Home = () => {
       isSearch.current = true;
     }
   }, []);
-  
+
   // ilk Render olubsa Datanı gətirmək
   useEffect(() => {
     window.scroll(0, 0);
     if (!isSearch.current) {
-      fetchPizzas();
+      getPizzas();
     }
     isSearch.current = false;
   }, [categoryId, sort, search, currentPage]);
 
-  const fetchPizzas = () => {
-    setLoading(true);
+  const getPizzas = () => {
     const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
     const sortBy = sort.sortProperty.replace('-', '');
     const category = categoryId > 0 ? `category=${categoryId}` : '';
 
-    const GetPizzas = async () => {
-      const respons = await axios.get(
-        `https://63c3fe4ef0028bf85fa0c6fe.mockapi.io/pizza?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`,
-      );
-      setPizzas(respons.data);
-      setLoading(false);
-    };
-    GetPizzas();
+    dispatch(
+      fetchPizzas({
+        sortBy,
+        order,
+        category,
+        search,
+        currentPage,
+      }),
+    );
   };
-
-
 
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id));
@@ -89,9 +88,9 @@ export const Home = () => {
       </div>
       <h2 className="content__title">{searchValue ? searchValue : 'Все пиццы'}</h2>
       <div className="content__items">
-        {loading
+        {status === 'loading'
           ? [...Array(10)].map((_, i) => <Skeleton key={i} />)
-          : pizzas.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
+          : items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
       </div>
       <Pagination onChangePage={onChangePage} />
     </div>
